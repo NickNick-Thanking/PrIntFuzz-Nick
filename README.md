@@ -66,8 +66,37 @@ sudo apt-get install python3-venv python3-pip
 
 Linux dependencies
 - build-essential: 包括 gcc, g++, make, 标准头文件等必要开发工具
+
+LLVM Clang 14
+```
+## 从 LLVM 官方仓库 添加软件源，才能安装 Clang 14
+wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
+sudo apt-add-repository "deb http://apt.llvm.org/focal/ llvm-toolchain-focal-14 main"
+
+## 安装 Clang-14
+sudo apt update
+sudo apt install clang-14
+
+## 安装配套工具
+sudo apt install clangd-14         # 用于语言服务器（编辑器支持）
+sudo apt install clang-tools-14    # 包含 clang-format, clang-tidy 等
+sudo apt install lld-14            # LLVM 的链接器
+
+## （可选）设置 clang 命令默认指向 clang-14
+sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-14 100
+sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-14 100
+clang --version
+```
+
 ```
 sudo apt install ninja-build build-essential cmake
+
+## 编译 Linux 安装缺失的工具（核心是 flex）
+sudo apt install flex bison
+
+# 推荐安装完整内核构建依赖
+sudo apt install build-essential libssl-dev libncurses-dev libelf-dev bc \
+                 libdw-dev libunwind-dev libslang2-dev binutils-dev
 ```
 
 ## 1.2 Build
