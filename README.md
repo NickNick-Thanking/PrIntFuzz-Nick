@@ -22,9 +22,6 @@ rm ~/PrIntFuzz
 ln -s ${HOME_PrIntFuzz}/ ~/PrIntFuzz
 # export WORKDIR_PrIntFuzz=~/PrIntFuzz
 ```
-```
-sudo apt-get install python3.12-venv python3-pip
-```
 
 Init submodules
 ```
@@ -62,6 +59,11 @@ pip3 install requests
 ```
 
 ### Build dependencies
+安装 python3 和 pip3
+```
+sudo apt-get install python3-venv python3-pip
+```
+
 Linux dependencies
 - build-essential: 包括 gcc, g++, make, 标准头文件等必要开发工具
 ```
