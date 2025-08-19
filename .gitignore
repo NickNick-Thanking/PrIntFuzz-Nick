@@ -12,3 +12,6 @@ core
 *.vim
 compile_commands.json
 third_party/go
+
+##
+venv/
