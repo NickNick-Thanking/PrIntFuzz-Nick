@@ -9,6 +9,7 @@ The following instructions guide you to set up the fuzzing environment and perfo
 Tested on Ubuntu 20.04.1.
 
 ## 1. Setup
+### 设置工作区
 Init Env
 ```
 chmod u+x ./setHostEnv.sh
@@ -47,6 +48,7 @@ deactivate
 
 ## 1.1 Prerequisite
 
+### Python3 dependencies
 Please install the following python package:
 
 ```bash
@@ -57,6 +59,13 @@ pip3 install GitPython
 More python3 dependencies
 ```
 pip3 install requests
+```
+
+### Build dependencies
+Linux dependencies
+- build-essential: 包括 gcc, g++, make, 标准头文件等必要开发工具
+```
+sudo apt install ninja-build build-essential cmake
 ```
 
 ## 1.2 Build
