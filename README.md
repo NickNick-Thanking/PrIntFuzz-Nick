@@ -89,14 +89,32 @@ clang --version
 ```
 
 ```
+######## 1
 sudo apt install ninja-build build-essential cmake
 
+######## 2
 ## 编译 Linux 安装缺失的工具（核心是 flex）
 sudo apt install flex bison
 
 # 推荐安装完整内核构建依赖
 sudo apt install build-essential libssl-dev libncurses-dev libelf-dev bc \
                  libdw-dev libunwind-dev libslang2-dev binutils-dev
+
+####### 3
+sudo apt install debootstrap
+
+## 其他可能缺失的依赖（建议一并安装）
+sudo apt install \
+    debootstrap \
+    qemu-utils \
+    qemu-system-x86 \
+    libvirt-clients \
+    libvirt-daemon-system \
+    virtinst \
+    openssh-client \
+    wget \
+    curl \
+    git
 ```
 
 ## 1.2 Build
