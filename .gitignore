@@ -15,3 +15,6 @@ third_party/go
 
 ##
 venv/
+
+## third_party
+patch/syzkaller.patch
