@@ -9,38 +9,46 @@ The following instructions guide you to set up the fuzzing environment and perfo
 Tested on Ubuntu 20.04.1.
 
 ## 1. Setup
+
+Init submodules
+```bash
+git submodule update --init --progress
+```
+
 ### 设置工作区
 Init Env
-```
+```bash
 chmod u+x ./setHostEnv.sh
 ./setHostEnv.sh
 ```
 
 Init workdir
-```
+```bash
 rm ~/PrIntFuzz
 ln -s ${HOME_PrIntFuzz}/ ~/PrIntFuzz
 # export WORKDIR_PrIntFuzz=~/PrIntFuzz
 ```
 
-Init submodules
-```
-git submodule update --init --progress
-```
-
 python3 venv
-```
+```bash
+# 后续激活
 cd ${WORKDIR_PrIntFuzz}
 source venv/bin/activate
 ```
-```
+```bash
+# 第一次/重建
 cd ${WORKDIR_PrIntFuzz}
 rm -rf venv
 python3 -m venv venv
 source venv/bin/activate
 ```
-```
+```bash
+# 退出
 deactivate
+```
+```bash
+# 安装 python3 和 pip3
+sudo apt-get install -y python3-venv python3-pip
 ```
 
 ## 1.1 Prerequisite
@@ -48,73 +56,23 @@ deactivate
 ### Python3 dependencies
 Please install the following python package:
 
-```bash
-pip3 install kconfiglib==14.1.0
-pip3 install GitPython
-```
-
-More python3 dependencies
-```
-pip3 install requests
+```python
+pip3 install kconfiglib==14.1.0 GitPython requests 
 ```
 
 ### Build dependencies
-安装 python3 和 pip3
-```
-sudo apt-get install python3-venv python3-pip
-```
-
 Linux dependencies
 - build-essential: 包括 gcc, g++, make, 标准头文件等必要开发工具
 
-LLVM Clang 14
-```
-## 从 LLVM 官方仓库 添加软件源，才能安装 Clang 14
-wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
-sudo apt-add-repository "deb http://apt.llvm.org/focal/ llvm-toolchain-focal-14 main"
+```bash
+sudo apt install -y git gcc make cmake
+sudo apt install -y ninja-build build-essential
+sudo apt install -y bc flex bison fakeroot debootstrap dwarves ncurses-dev binutils-dev xz-utils libssl-dev libelf-dev libdw-dev libunwind-dev libslang2-dev
 
-## 安装 Clang-14
-sudo apt update
-sudo apt install clang-14
+#5.13之后支持zstd压缩
+sudo apt install -y zstd 
 
-## 安装配套工具
-sudo apt install clangd-14         # 用于语言服务器（编辑器支持）
-sudo apt install clang-tools-14    # 包含 clang-format, clang-tidy 等
-sudo apt install lld-14            # LLVM 的链接器
-
-## （可选）设置 clang 命令默认指向 clang-14
-sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-14 100
-sudo update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-14 100
-clang --version
-```
-
-```
-######## 1
-sudo apt install ninja-build build-essential cmake
-
-######## 2
-## 编译 Linux 安装缺失的工具（核心是 flex）
-sudo apt install flex bison
-
-# 推荐安装完整内核构建依赖
-sudo apt install build-essential libssl-dev libncurses-dev libelf-dev bc \
-                 libdw-dev libunwind-dev libslang2-dev binutils-dev
-
-####### 3
-sudo apt install debootstrap
-
-## 其他可能缺失的依赖（建议一并安装）
-sudo apt install \
-    debootstrap \
-    qemu-utils \
-    qemu-system-x86 \
-    libvirt-clients \
-    libvirt-daemon-system \
-    virtinst \
-    openssh-client \
-    wget \
-    curl \
-    git
+sudo apt install -y qemu-utils qemu-system-x86 virtinst libvirt-clients libvirt-daemon-system
 ```
 
 ## 1.2 Build
@@ -166,7 +124,7 @@ python3 ${WORKDIR_PrIntFuzz}/scripts/python/setup.py
 7. Build the disk image for fuzzing
     
     ```bash
-    python3 ${WORKDIR_PrIntFuzz}/scripts/python/setup.py --build_image
+    python3 ${WORKDIR_PrIntFuzz}/scripts/python/setup.py --create_image # --build_image
     ```
     
 8. Build the Linux kernel for fault injection
