@@ -18,3 +18,4 @@ venv/
 
 ## third_party
 patch/syzkaller.patch
+tmp/
