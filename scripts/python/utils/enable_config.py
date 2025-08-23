@@ -2,6 +2,7 @@ import json
 import subprocess
 from . import environment
 
+import inspect
 
 class EnableConfig(object):
 

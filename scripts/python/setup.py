@@ -8,6 +8,8 @@ import argparse
 
 import gen_syz_config
 
+import inspect
+flag_git_apply_syzkaller_patch = False
 
 class Setup(object):
 
@@ -282,14 +284,18 @@ class Setup(object):
         print(f'[INFO] config_bak_path = [{config_bak_path}]')
 
         if config_bak_path.exists() and not self.args.clean_config and not self.args.clean_build:
+            print(f"{__file__}, {inspect.currentframe().f_lineno}: config_bak_path.exists()...")
             self._run_cmd(f'cp {config_bak_path} {output_dir}/.config')
         else:
+            print(f"{__file__}, {inspect.currentframe().f_lineno}: config_bak_path.exists() else...")
             os.chdir(self.env.linux_dir)
             args = types.SimpleNamespace()
 
             if mode == 'allmod':
+                print(f"{__file__}, {inspect.currentframe().f_lineno}: allmod...")
                 self._run_cmd(f'make O={output_dir} CC=clang allmodconfig')
             else:
+                print(f"{__file__}, {inspect.currentframe().f_lineno}: allmod else...")
                 self._run_cmd(f'make ARCH={arch} O={output_dir} defconfig')
                 self._run_cmd(f'make ARCH={arch} O={output_dir} kvm_guest.config')
 
@@ -435,7 +441,8 @@ class Setup(object):
         self._run_cmd(f'git checkout 3cd800e43')
         self._run_cmd(f'tar -xzvf {self.env.syzkaller_patch_tar} '
                 f'-C {self.env.patch_dir}')
-        self._run_cmd(f'git apply {self.env.syzkaller_patch}')
+        if flag_git_apply_syzkaller_patch:            
+            self._run_cmd(f'git apply {self.env.syzkaller_patch}')
         self._run_cmd('make')
 
         print('[+]Build syzkaller finished.')
