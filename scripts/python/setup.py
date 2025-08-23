@@ -272,6 +272,8 @@ class Setup(object):
             arch = 'arm64'
         else:
             raise Exception(f"mode {mode} is wrong!")
+        
+        print(f'[INFO] output_dir = [{output_dir}]')
 
         if self.args.clean_build:
             self._run_cmd(f'rm -r {output_dir}')
