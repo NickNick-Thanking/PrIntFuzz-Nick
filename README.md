@@ -10,7 +10,7 @@ Tested on Ubuntu 20.04.1.
 
 ## 1. Setup
 
-Init submodules
+### Init submodules
 ```bash
 git submodule update --init --progress
 ```

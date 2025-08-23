@@ -3,8 +3,6 @@ bash -c "cat >> ~/.bashrc" << 'EOF'
 
 ############################### PrIntFuzz Environment ###############################
 
-export HOME_PrIntFuzz=~/github-nick/PrIntFuzz-Nick
-
-export WORKDIR_PrIntFuzz=~/PrIntFuzz
+export WORKDIR_PrIntFuzz=~/data_me/github_me/PrIntFuzz-Nick
 
 EOF
