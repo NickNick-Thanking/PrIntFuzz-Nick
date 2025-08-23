@@ -23,10 +23,10 @@ chmod u+x ./setHostEnv.sh
 ```
 
 Init workdir
+- ~~默认工作目录是 `~/PrintFuzz`，所以必须创建连接： `ln -s ${HOME_PrIntFuzz}/ ~/PrIntFuzz`~~
+- 已经修改代码可以使用 `Path.cwd()` 作为 `env.project_dir`，不需要在创建连接
 ```bash
-rm ~/PrIntFuzz
-ln -s ${HOME_PrIntFuzz}/ ~/PrIntFuzz
-# export WORKDIR_PrIntFuzz=~/PrIntFuzz
+cd ${WORKDIR_PrIntFuzz}
 ```
 
 python3 venv
@@ -52,6 +52,9 @@ sudo apt-get install -y python3-venv python3-pip
 ```
 
 ## 1.1 Prerequisite
+```bash
+cd ${WORKDIR_PrIntFuzz}
+```
 
 ### Python3 dependencies
 Please install the following python package:
@@ -80,7 +83,7 @@ sudo apt install -y qemu-utils qemu-system-x86 virtinst libvirt-clients libvirt-
 ### 1.2.1 Use one click script
 
 ```bash
-python3 ${WORKDIR_PrIntFuzz}/scripts/python/setup.py
+python3 ./scripts/python/setup.py
 ```
 
 ### 1.2.2 Step by step
@@ -88,61 +91,61 @@ python3 ${WORKDIR_PrIntFuzz}/scripts/python/setup.py
 1. Build the LLVM
     
     ```bash
-    python3 ${WORKDIR_PrIntFuzz}/scripts/python/setup.py --build_llvm
+    python3 ./scripts/python/setup.py --build_llvm
     ```
     
 2. Build the Linux kernel with `allmodconfig`
     
     ```bash
-    python3 ${WORKDIR_PrIntFuzz}/scripts/python/setup.py --build_linux_all
+    python3 ./scripts/python/setup.py --build_linux_all
     ```
     
 3. Build the static analyzer
     
     ```bash
-    python3 ${WORKDIR_PrIntFuzz}/scripts/python/setup.py --build_analyzer
+    python3 ./scripts/python/setup.py --build_analyzer
     ```
     
 4. Perform static analysis
     
     ```bash
-    python3 ${WORKDIR_PrIntFuzz}/scripts/python/setup.py --analyze
+    python3 ./scripts/python/setup.py --analyze
     ```
     
 5. Build the syzkaller
     
     ```bash
-    python3 ${WORKDIR_PrIntFuzz}/scripts/python/setup.py --build_syz
+    python3 ./scripts/python/setup.py --build_syz
     ```
     
 6. Build the Linux kernel for fuzzing
     
     ```bash
-    python3 ${WORKDIR_PrIntFuzz}/scripts/python/setup.py --build_linux_fuzz
+    python3 ./scripts/python/setup.py --build_linux_fuzz
     ```
     
 7. Build the disk image for fuzzing
     
     ```bash
-    python3 ${WORKDIR_PrIntFuzz}/scripts/python/setup.py --create_image # --build_image
+    python3 ./scripts/python/setup.py --create_image # --build_image
     ```
     
 8. Build the Linux kernel for fault injection
     
     ```bash
-    python3 ${WORKDIR_PrIntFuzz}/scripts/python/setup.py --build_linux_fault
+    python3 ./scripts/python/setup.py --build_linux_fault
     ```
     
 9. Build the qemu with fake devices
     
     ```bash
-    python3 ${WORKDIR_PrIntFuzz}/scripts/python/setup.py --build_qemu
+    python3 ./scripts/python/setup.py --build_qemu
     ```
     
 10. Build the docker image for fuzzing
     
     ```bash
-    python3 ${WORKDIR_PrIntFuzz}/scripts/python/setup.py --create_docker
+    python3 ./scripts/python/setup.py --create_docker
     ```
     
 
@@ -157,7 +160,7 @@ python3 ${WORKDIR_PrIntFuzz}/scripts/python/setup.py
 2. Patch the kernel’s KVM module
     
     ```bash
-    sudo patch -p1 < ${WORKDIR_PrIntFuzz}/patch/linux_host.patch (for Linux 5.13)
+    sudo patch -p1 < ./patch/linux_host.patch (for Linux 5.13)
     ```
     
 3. Build and install the kernel
@@ -179,7 +182,7 @@ python3 ${WORKDIR_PrIntFuzz}/scripts/python/setup.py
 1. Boot the virtual machine with a virtual device (`-e`)
     
     ```bash
-    python3 ${WORKDIR_PrIntFuzz}/scripts/python/qemu.py -m fuzz -e drivers_atm_he
+    python3 ./scripts/python/qemu.py -m fuzz -e drivers_atm_he
     ```
     
 2. Check whether the driver is loaded
@@ -201,17 +204,17 @@ python3 ${WORKDIR_PrIntFuzz}/scripts/python/setup.py
 ## 4. Perform fault Injection Test
 
 ```bash
-python3 ${WORKDIR_PrIntFuzz}/scripts/python/evaluation/probe.py -t PCI
+python3 ./scripts/python/evaluation/probe.py -t PCI
 ```
 
-Drivers that match successfully are in the `${WORKDIR_PrIntFuzz}/out/probe/success/pci`, drivers that fail to match are in the `${WORKDIR_PrIntFuzz}/out/probe/fail/pci` directory, and drivers that cause system crashes are in the `${WORKDIR_PrIntFuzz}/out/probe/crash` directory.
+Drivers that match successfully are in the `./out/probe/success/pci`, drivers that fail to match are in the `./out/probe/fail/pci` directory, and drivers that cause system crashes are in the `./out/probe/crash` directory.
 
 Each driver has a separate folder where the relevant logs are stored, and we can check the logs to determine if the driver is crashing the kernel.
 
 ## 5. Perform fuzzing on drivers
 
 ```bash
-python3 ${WORKDIR_PrIntFuzz}/scripts/python/evaluation/fuzz.py
+python3 ./scripts/python/evaluation/fuzz.py
 ```
 
 ```bash

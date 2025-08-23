@@ -1,12 +1,18 @@
 from pathlib import Path
 import types
 
+flag_use_cwd = True
 
 def get_env():
     env = types.SimpleNamespace()
-    env.home_dir = Path.home()
-    env.project_name = 'PrIntFuzz'
-    env.project_dir = env.home_dir / env.project_name
+
+    if flag_use_cwd:
+        env.project_dir = Path.cwd()
+    else:
+        env.home_dir = Path.home()
+        env.project_name = 'PrIntFuzz'
+        env.project_dir = env.home_dir / env.project_name
+
     env.bin_dir = env.project_dir / 'bin'
     env.bin_aarch64_toolchain_dir = env.bin_dir / 'gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu'
     env.llvm_install_dir = env.bin_dir / 'llvm'
