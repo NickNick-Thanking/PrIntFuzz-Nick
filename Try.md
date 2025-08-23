@@ -26,11 +26,9 @@ Traceback (most recent call last):
 Exception: The json file /home/nick/data-me/github-me/PrIntFuzz-Nick/third_party/linux/config/linux/enable_config.json doesn't exist.
 ```
 
-添加
+原因与解决方案
+- 因为 `flag_use_cwd = True`，改为 `False` 就可以了。
 
-`python3 ./scripts/python/setup.py`
-```
-```
 
 # PrIntFuzz
 

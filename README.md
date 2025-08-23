@@ -25,8 +25,19 @@ chmod u+x ./setHostEnv.sh
 Init workdir
 - ~~默认工作目录是 `~/PrintFuzz`，所以必须创建连接： `ln -s ${HOME_PrIntFuzz}/ ~/PrIntFuzz`~~
 - 已经修改代码可以使用 `Path.cwd()` 作为 `env.project_dir`，不需要在创建连接
+
+`flag_use_cwd = True`
 ```bash
 cd ${WORKDIR_PrIntFuzz}
+cd ~/data-me/github-me/PrIntFuzz-Nick
+```
+
+`flag_use_cwd = False`
+- 给目录创建软连接时，不要在目录后面添加 `/`
+```
+rm ~/PrIntFuzz
+ln -s ~/data-me/github-me/PrIntFuzz-Nick-2 ~/PrIntFuzz
+cd ~/PrIntFuzz
 ```
 
 python3 venv
@@ -79,6 +90,11 @@ sudo apt install -y qemu-utils qemu-system-x86 virtinst libvirt-clients libvirt-
 ```
 
 ## 1.2 Build
+
+Re-build 需要删除 build 和 out
+```
+rm -rf build out
+```
 
 ### 1.2.1 Use one click script
 

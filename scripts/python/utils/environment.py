@@ -7,7 +7,8 @@ def get_env():
     env = types.SimpleNamespace()
 
     if flag_use_cwd:
-        env.project_dir = Path.cwd()
+        env.project_name = Path.cwd().name
+        env.project_dir = Path.cwd()        
     else:
         env.home_dir = Path.home()
         env.project_name = 'PrIntFuzz'
