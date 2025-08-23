@@ -272,13 +272,15 @@ class Setup(object):
             arch = 'arm64'
         else:
             raise Exception(f"mode {mode} is wrong!")
-        
-        print(f'[INFO] output_dir = [{output_dir}]')
 
         if self.args.clean_build:
             self._run_cmd(f'rm -r {output_dir}')
         output_dir.mkdir(parents=True, exist_ok=True)
         config_bak_path = self.env.out_linux_config_dir / f'linux_{arch}_{mode}.config'
+
+        print(f'[INFO] output_dir = [{output_dir}]')
+        print(f'[INFO] config_bak_path = [{config_bak_path}]')
+
         if config_bak_path.exists() and not self.args.clean_config and not self.args.clean_build:
             self._run_cmd(f'cp {config_bak_path} {output_dir}/.config')
         else:
@@ -296,6 +298,7 @@ class Setup(object):
 
             args.config_type = mode
             args.config_file = output_dir / '.config'
+            print(f'[INFO] args = [{args}]')
             enable_config = utils.EnableConfig(args)
             enable_config.process()
             self._run_cmd(f'cp {args.config_file} {config_bak_path}')
