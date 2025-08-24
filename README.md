@@ -89,6 +89,12 @@ sudo apt install -y zstd
 sudo apt install -y qemu-utils qemu-system-x86 virtinst libvirt-clients libvirt-daemon-system
 ```
 
+QEMU dependencies
+```bash
+sudo apt update
+sudo apt install -y libglib2.0-dev libglib2.0-dev-bin
+```
+
 ## 1.2 Build
 
 Re-build 需要删除 build 和 out

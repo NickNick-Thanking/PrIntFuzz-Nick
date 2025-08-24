@@ -21,8 +21,6 @@ sudo mkdir -p $DIR
 sudo chmod 0755 $DIR
 # sudo debootstrap --include=$PREINSTALL_PKGS --components=main $RELEASE $DIR https://mirrors.tuna.tsinghua.edu.cn/debian-elts
 # sudo debootstrap --include=$PREINSTALL_PKGS --components=main $RELEASE $DIR https://mirrors.tuna.tsinghua.edu.cn/debian # 依然失败，见 "vmware.HOME/aio.07.FAILED__2.log.py"
-sudo debootstrap --include=$PREINSTALL_PKGS --components=main $RELEASE $DIR $MIRROR_debian
-
-
+sudo debootstrap --include=$PREINSTALL_PKGS --components=main $RELEASE $DIR $MIRROR_archive_debian
 
 popd > /dev/null
